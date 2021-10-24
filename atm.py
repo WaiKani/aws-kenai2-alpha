@@ -82,6 +82,9 @@ def withdrawUSD(user):
         transactions.append({ 'ACTION': 'WITHDRAW', 'AMMOUNT': ammount, 'CURRENCY': 'USD' })
 
 def withdraw(user):
+    print('--------------------------')
+    print('WITHDRAW')
+    print('--------------------------')
     currency = promptString('What would you like to withdraw (Ksh/USD)').upper()
 
     if (currency == 'KSH'):
@@ -92,7 +95,13 @@ def withdraw(user):
         print('Invalid currency')
 
 def balance(user):
-    pass
+    print('--------------------------')
+    print('BALANCE')
+    print('--------------------------')
+    print('You have Ksh:', user.get('balance', {}).get('KSh'))
+    print('You have USD:', user.get('balance', {}).get('USD'))
+    print('--------------------------')
+    promptString('Press enter to continue')
 
 def menu(user):
     print('--------------------------')
