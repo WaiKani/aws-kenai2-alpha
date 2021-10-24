@@ -122,7 +122,7 @@ def menu(user):
     elif command == 'Q':
         return False
 
-        return True
+    return True
 
 user = login()
 
