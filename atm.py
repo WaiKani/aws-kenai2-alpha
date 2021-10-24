@@ -69,9 +69,12 @@ def withdrawKSH(user):
     ammount = promptAmmount(min, balance)
 
     # Check for error
-    if (ammount > 0):
-        user.get('balance', {}).update({ 'KSh': balance - ammount })
-        transactions.append({ 'ACTION': 'WITHDRAW', 'AMMOUNT': ammount, 'CURRENCY': 'KSH' })
+    if ammount > 0:
+        command = promptString('Withdraw ' + str(ammount) + ' KSH').upper()
+
+        if command == 'Y':
+            user.get('balance', {}).update({ 'KSh': balance - ammount })
+            transactions.append({ 'ACTION': 'WITHDRAW', 'AMMOUNT': ammount, 'CURRENCY': 'KSH' })
 
 def withdrawUSD(user):
     min = usd_notes[2]
@@ -80,8 +83,11 @@ def withdrawUSD(user):
 
     # Check for error
     if (ammount > 0):
-        user.get('balance').update({ 'USD': balance - ammount })
-        transactions.append({ 'ACTION': 'WITHDRAW', 'AMMOUNT': ammount, 'CURRENCY': 'USD' })
+        command = promptString('Withdraw ' + str(ammount) + ' USD').upper()
+
+        if command == 'Y':
+            user.get('balance').update({ 'USD': balance - ammount })
+            transactions.append({ 'ACTION': 'WITHDRAW', 'AMMOUNT': ammount, 'CURRENCY': 'USD' })
 
 def withdraw(user):
     print('--------------------------')
@@ -101,6 +107,12 @@ def deposit(user):
     print('DEPOSIT')
     print('--------------------------')
 
+    currency = promptString('What would you like to deposit (Ksh/USD)').upper()
+
+    if (currency != 'KSH'):
+        print('Invalid currency')
+        return
+
     min = ksh_notes[3]
     balance = user.get('balance').get('KSh')
     ammount = promptNumber('How much would you like to deposit (x' + str(min) + ' Ksh)')
@@ -110,8 +122,11 @@ def deposit(user):
         print('Please enter a number that is a multiple of:', min)
         return
 
-    user.get('balance', {}).update({ 'KSh': balance + ammount })
-    transactions.append({ 'ACTION': 'DEPOSIT', 'AMMOUNT': ammount, 'CURRENCY': 'KSH' })
+    command = promptString('Deposit ' + str(ammount) + ' KSH').upper()
+
+    if command == 'Y':
+        user.get('balance', {}).update({ 'KSh': balance + ammount })
+        transactions.append({ 'ACTION': 'DEPOSIT', 'AMMOUNT': ammount, 'CURRENCY': 'KSH' })
 
 def balance(user):
     print('--------------------------')
@@ -137,13 +152,13 @@ def receipt(user):
     
     for transaction in transactions:
         if transaction.get('ACTION') == 'DEPOSIT':
-            print(transaction.get('AMMOUNT'), transaction.get('CURRENCY'))
+            print('+', str(transaction.get('AMMOUNT')).rjust(12), transaction.get('CURRENCY'))
         elif transaction.get('ACTION') == 'WITHDRAW':
-            print(-transaction.get('AMMOUNT'), transaction.get('CURRENCY'))
+            print('-', str(transaction.get('AMMOUNT')).rjust(12), transaction.get('CURRENCY'))
 
     print('--------------------------')
-    print('Ksh', user.get('balance', {}).get('KSh'))
-    print('USD', user.get('balance', {}).get('USD'))
+    print('Ksh', str(user.get('balance', {}).get('KSh')).rjust(10))
+    print('USD', str(user.get('balance', {}).get('USD')).rjust(10))
     print('--------------------------')
     print(date.today())
 
