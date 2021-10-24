@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from datetime import date
+
 users = [
     {'username': 'walter', 'pin': '0001', 'balance': { 'KSh':2000, 'USD':0 }},
     {'username': 'elaine', 'pin': '0002', 'balance': { 'KSh':1000, 'USD':200 }},
@@ -103,6 +105,29 @@ def balance(user):
     print('--------------------------')
     promptString('Press enter to continue')
 
+def receipt(user):
+    while (True):
+        printReceipt = promptString('Do you want a receipt (y/n)').upper()
+
+        if printReceipt == 'N':
+            return
+        elif printReceipt == 'Y':
+            break
+
+    print('--------------------------')
+    print('RECEIPT')
+    print('--------------------------')
+    
+    for transaction in transactions:
+        if transaction.get('ACTION') == 'WITHDRAW':
+            print(-transaction.get('AMMOUNT'), transaction.get('CURRENCY'))
+
+    print('--------------------------')
+    print('Ksh', user.get('balance', {}).get('KSh'))
+    print('USD', user.get('balance', {}).get('USD'))
+    print('--------------------------')
+    print(date.today())
+
 def menu(user):
     print('--------------------------')
     print('MENU')
@@ -128,3 +153,5 @@ user = login()
 
 while (menu(user)):
     pass
+
+receipt(user)
