@@ -96,6 +96,23 @@ def withdraw(user):
     else:
         print('Invalid currency')
 
+def deposit(user):
+    print('--------------------------')
+    print('DEPOSIT')
+    print('--------------------------')
+
+    min = ksh_notes[3]
+    balance = user.get('balance').get('KSh')
+    ammount = promptNumber('How much would you like to deposit (x' + str(min) + ' Ksh)')
+
+    # Check for error
+    if (ammount <= 0 or ammount % min > 0):
+        print('Please enter a number that is a multiple of:', min)
+        return
+
+    user.get('balance', {}).update({ 'KSh': balance + ammount })
+    transactions.append({ 'ACTION': 'DEPOSIT', 'AMMOUNT': ammount, 'CURRENCY': 'KSH' })
+
 def balance(user):
     print('--------------------------')
     print('BALANCE')
@@ -119,7 +136,9 @@ def receipt(user):
     print('--------------------------')
     
     for transaction in transactions:
-        if transaction.get('ACTION') == 'WITHDRAW':
+        if transaction.get('ACTION') == 'DEPOSIT':
+            print(transaction.get('AMMOUNT'), transaction.get('CURRENCY'))
+        elif transaction.get('ACTION') == 'WITHDRAW':
             print(-transaction.get('AMMOUNT'), transaction.get('CURRENCY'))
 
     print('--------------------------')
@@ -134,16 +153,17 @@ def menu(user):
     print('--------------------------')
     print('A: WITHDRAW')
     print('B: CHECK BALANCE')
+    print('C: DEPOSIT')
     print('Q: QUIT')
 
     command = promptString('What would you like to do (A/B/Q)').upper()
 
     if command == 'A':
         withdraw(user)
-        return True
     elif command == 'B':
         balance(user)
-        return True
+    elif command == 'C':
+        deposit(user)
     elif command == 'Q':
         return False
 
