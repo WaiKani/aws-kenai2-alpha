@@ -115,7 +115,7 @@ def withdrawKSH(user):
 
     # Check for error
     if ammount > 0:
-        command = promptString('Withdraw ' + str(ammount) + ' KSH').upper()
+        command = promptString('Withdraw ' + str(ammount) + ' KSH (y/n)').upper()  #added the y/n options
 
         if command == 'Y':
             user.get('balance', {}).update({ 'KSh': balance - ammount })
@@ -178,7 +178,7 @@ def deposit(user):
         print('Please enter a number that is a multiple of:', min)
         return
 
-    command = promptString('Deposit ' + str(ammount) + ' KSH').upper()
+    command = promptString('Deposit ' + str(ammount) + ' KSH  (y/n)').upper() #added the y/n options
 
     if command == 'Y':
         user.get('balance', {}).update({ 'KSh': balance + ammount })
