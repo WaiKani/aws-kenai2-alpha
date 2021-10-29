@@ -277,3 +277,4 @@ if __name__ == '__main__':
 
     #on quiting prompt the user if they want a reciept
     receipt(user)
+    
