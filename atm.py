@@ -36,7 +36,8 @@ def promptNumber(prompt):
 
 #added this function after importing getpass. Getpass is a prompt for input on it's own
 def promptPin(userPin):
-    return getpass.getpass(userPin+":\n")
+    userPin = userPin+":\n"
+    return getpass.getpass(userPin)
 
 
 
