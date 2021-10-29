@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from datetime import date
 import os
+import getpass
 
 #Dict serving as the database of the atm
 users = [
@@ -33,6 +34,10 @@ def promptString(prompt):
 def promptNumber(prompt):
     return int(promptString(prompt))
 
+#added this function after importing getpass. Getpass is a prompt for input on it's own
+def promptPin(userPin):
+    return getpass.getpass(userPin+":\n")
+
 
 
 ########
@@ -64,7 +69,10 @@ def login():
         username = promptString('Enter user name')
 
         if (username):
-            pin = promptString('Enter your PIN number')
+            # pin = promptString('Enter your PIN number')
+            
+            #added this prompt pin
+            pin = promptPin('Enter your PIN number')
 
             counter = counter + 1
             clearConsole()
